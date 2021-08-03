@@ -48,7 +48,9 @@ func GetIjin(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint hit: Get data ijin")
 	ijin := []I.T_Ijin{}
 
-	db.Raw("SELECT * FROM T_Ijin  ").Scan(&ijin)
+	// db.Raw("SELECT * FROM T_Ijin  ").Scan(&ijin)
+	db.Raw("SELECT cast(ID as varchar(max)) as ID, Emp_NIK, Date, Start_Time, End_Time,Length,Description,Reason,AppByHead," +
+		"Type_Approve_Head, Done_Head,Approve_Head_Date,AppByHead2,Type_Approve_Head2,Done_Head2,Approve_Head_Date2,AppByHRD,Type_Approve_HRD,Done_HRD,Approve_HRD_Date,Ijin_File,Insert_User,Insert_Date,Update_User,Update_Date,End_Date,Length_Days FROM T_Ijin").Scan(&ijin)
 
 	res := I.Result{Code: 200, Data: ijin, Message: "Success get ijin"}
 	results, err := json.Marshal(res)

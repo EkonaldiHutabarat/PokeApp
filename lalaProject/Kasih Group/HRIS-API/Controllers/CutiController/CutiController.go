@@ -49,7 +49,9 @@ func GetCuti(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint hit: Get data cuti")
 	Cuti := []C.T_Cuti{}
 
-	db.Raw("SELECT * FROM T_Cuti ").Scan(&Cuti)
+	// db.Raw("SELECT * FROM T_Cuti ").Scan(&Cuti)
+	db.Raw("SELECT cast(ID as varchar(max)) as ID, Emp_NIK, Start_Date, End_Date,Length_Days,Description,Note,AppByHead," +
+		"Type_Approve_Head, Done_Head,Approve_Head_Date,AppByHead2,Type_Approve_Head2,Done_Head2,Approve_Head_Date2,AppByHRD,Type_Approve_HRD,Done_HRD,Approve_HRD_Date,Cuti_File,Insert_User,Insert_Date,Update_User,Update_Date,End_Date,Length_Days, SisaCuti FROM T_Cuti").Scan(&Cuti)
 
 	res := C.Result{Code: 200, Data: Cuti, Message: "Success get cuti"}
 	results, err := json.Marshal(res)

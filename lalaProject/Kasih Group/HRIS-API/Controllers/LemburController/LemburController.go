@@ -47,7 +47,9 @@ func GetLembur(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint hit: Get data lembur")
 	Lembur := []L.T_Lembur{}
 
-	db.Raw("SELECT * FROM T_Lembur ").Scan(&Lembur)
+	// db.Raw("SELECT * FROM T_Lembur ").Scan(&Lembur)
+	db.Raw("SELECT cast(ID as varchar(max)) as ID, Emp_NIK, Date, Start_Time, End_Time,Lembur_Type,Description,AppByHead," +
+		"Type_Approve_Head, Done_Head,Approve_Head_Date,AppByHead2,Type_Approve_Head2,Done_Head2,Approve_Head_Date2,AppByHRD,Type_Approve_HRD,Done_HRD,Approve_HRD_Date,Insert_User,Insert_Date,Update_User,Update_Date,Lembur_File FROM T_Lembur").Scan(&Lembur)
 
 	res := L.Result{Code: 200, Data: Lembur, Message: "Success get lembur"}
 	results, err := json.Marshal(res)
